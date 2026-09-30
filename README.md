@@ -1,10 +1,12 @@
 # GiveHold
 
-**An inventory system that tracks donated items and lets volunteers reserve them for pickups without double-booking limited stock.**
+Donation inventory and pickup reservations.
 
-[Live demo](https://shelterstock-demo.onrender.com) — open directly, no sign-in required. The free service may take about a minute to wake after inactivity. All records are fictional.
+Built from my experience volunteering at a donation-based charity. Volunteers can track stock, reserve items, and record pickups. PostgreSQL transactions and row locks prevent competing reservations from claiming the same stock.
 
-Inspired by volunteering at a donation-based charity, GiveHold addresses the coordination of donated inventory and pickup reservations. It is a working prototype and has not been deployed at a charity. It uses fictional volunteers and random pickup IDs; it stores no family details. The main engineering problem is making a reservation correct when two people want the last unit at the same time.
+[Live demo](https://shelterstock-demo.onrender.com) · No sign-in required. The first load may take about a minute.
+
+This prototype uses fictional data and is not deployed at a charity.
 
 ## Run locally
 
