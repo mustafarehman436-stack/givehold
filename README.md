@@ -6,7 +6,7 @@ Built from my experience volunteering at a donation-based charity. Volunteers ca
 
 [Live demo](https://shelterstock-demo.onrender.com) · The first load may take about a minute.
 
-This prototype uses fictional data and is not deployed at a charity.
+This prototype uses fictional data.
 
 ## Run locally
 
