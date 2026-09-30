@@ -4,7 +4,7 @@ Donation inventory and pickup reservations.
 
 Built from my experience volunteering at a donation-based charity. Volunteers can track stock, reserve items, and record pickups. PostgreSQL transactions and row locks prevent competing reservations from claiming the same stock.
 
-[Live demo](https://shelterstock-demo.onrender.com) · No sign-in required. The first load may take about a minute.
+[Live demo](https://shelterstock-demo.onrender.com) · The first load may take about a minute.
 
 This prototype uses fictional data and is not deployed at a charity.
 
