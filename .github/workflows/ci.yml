@@ -1,0 +1,18 @@
+name: Test GiveHold
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PostgreSQL integration and concurrency tests
+        run: docker compose --profile test up --build --abort-on-container-exit --exit-code-from tests tests
+      - name: Build frontend
+        run: docker compose build web
+      - name: Build hosted demo image
+        run: docker build -t shelterstock-demo .
+      - name: Stop containers
+        if: always()
+        run: docker compose --profile test down
