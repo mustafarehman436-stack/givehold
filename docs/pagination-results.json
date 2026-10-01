@@ -1,0 +1,89 @@
+{
+  "python": "3.12.14",
+  "os": "Windows-11-10.0.26200-SP0",
+  "postgresql": "16.8",
+  "items": 10000,
+  "page_size": 50,
+  "results": [
+    {
+      "name": "original",
+      "repeat": 1,
+      "samples": 50,
+      "median_ms": 177.31220000132453,
+      "p95_ms": 197.2851000027731,
+      "response_bytes": 1117789
+    },
+    {
+      "name": "paginated",
+      "repeat": 1,
+      "samples": 50,
+      "median_ms": 4.757349997817073,
+      "p95_ms": 5.716600004234351,
+      "response_bytes": 5456
+    },
+    {
+      "name": "paginated",
+      "repeat": 2,
+      "samples": 50,
+      "median_ms": 4.619400002411567,
+      "p95_ms": 5.851199995959178,
+      "response_bytes": 5456
+    },
+    {
+      "name": "original",
+      "repeat": 2,
+      "samples": 50,
+      "median_ms": 179.56554999909713,
+      "p95_ms": 230.3801999951247,
+      "response_bytes": 1117789
+    },
+    {
+      "name": "original",
+      "repeat": 3,
+      "samples": 50,
+      "median_ms": 181.02854999960982,
+      "p95_ms": 211.85360000526998,
+      "response_bytes": 1117789
+    },
+    {
+      "name": "paginated",
+      "repeat": 3,
+      "samples": 50,
+      "median_ms": 4.517850004049251,
+      "p95_ms": 5.380200003855862,
+      "response_bytes": 5456
+    },
+    {
+      "name": "paginated",
+      "repeat": 4,
+      "samples": 50,
+      "median_ms": 4.548949997115415,
+      "p95_ms": 5.047200000262819,
+      "response_bytes": 5456
+    },
+    {
+      "name": "original",
+      "repeat": 4,
+      "samples": 50,
+      "median_ms": 181.4596000003803,
+      "p95_ms": 204.5332999987295,
+      "response_bytes": 1117789
+    },
+    {
+      "name": "original",
+      "repeat": 5,
+      "samples": 50,
+      "median_ms": 191.26069999765605,
+      "p95_ms": 219.02509999927133,
+      "response_bytes": 1117789
+    },
+    {
+      "name": "paginated",
+      "repeat": 5,
+      "samples": 50,
+      "median_ms": 4.435600003489526,
+      "p95_ms": 5.780300001788419,
+      "response_bytes": 5456
+    }
+  ]
+}

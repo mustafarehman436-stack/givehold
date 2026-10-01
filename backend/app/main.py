@@ -1,7 +1,7 @@
 from uuid import UUID
-from fastapi import FastAPI, Depends, Request
+from fastapi import FastAPI, Depends, Request, Query
 from fastapi.responses import JSONResponse
-from sqlalchemy import select, text
+from sqlalchemy import select, text, func, or_
 from sqlalchemy.exc import IntegrityError
 from .db import Session
 from .models import Item, Volunteer, Pickup, Reservation
@@ -40,8 +40,53 @@ def health(db=Depends(database)):
 
 
 @app.get("/items")
-def items(db=Depends(database)):
-    return [record(x) for x in db.scalars(select(Item).order_by(Item.id))]
+def items(
+    limit: int = Query(50, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+    db=Depends(database),
+):
+    return [
+        record(x)
+        for x in db.scalars(select(Item).order_by(Item.id).limit(limit).offset(offset))
+    ]
+
+
+@app.get("/inventory")
+def inventory(
+    limit: int = Query(50, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+    q: str = Query("", max_length=100),
+    db=Depends(database),
+):
+    statement = select(Item)
+    if q.strip():
+        # Treat %, _ and backslashes as search text, not SQL wildcards.
+        value = q.strip().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        statement = statement.where(
+            or_(
+                *(
+                    column.ilike(f"%{value}%", escape="\\")
+                    for column in (Item.name, Item.category, Item.condition)
+                )
+            )
+        )
+    total = db.scalar(select(func.count()).select_from(statement.subquery()))
+    on_hand, reserved = db.execute(
+        select(
+            func.coalesce(func.sum(Item.on_hand), 0),
+            func.coalesce(func.sum(Item.reserved), 0),
+        )
+    ).one()
+    return {
+        "items": [
+            record(x)
+            for x in db.scalars(statement.order_by(Item.id).limit(limit).offset(offset))
+        ],
+        "total": total,
+        "on_hand": on_hand,
+        "reserved": reserved,
+        "available": on_hand - reserved,
+    }
 
 
 @app.post("/items", status_code=201)
@@ -87,8 +132,12 @@ def create_pickup(data: PickupIn, db=Depends(database)):
 @app.get("/reservations")
 def reservations(db=Depends(database)):
     return [
-        record(x)
-        for x in db.scalars(select(Reservation).order_by(Reservation.id.desc()))
+        {**record(reservation), "item_name": name}
+        for reservation, name in db.execute(
+            select(Reservation, Item.name)
+            .join(Item, Reservation.item_id == Item.id)
+            .order_by(Reservation.id.desc())
+        )
     ]
 
 

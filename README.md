@@ -97,7 +97,8 @@ See [PostgreSQL row locking](https://www.postgresql.org/docs/16/explicit-locking
 | Method / path | Meaning |
 |---|---|
 | GET /health | Database connectivity |
-| GET, POST /items | List inventory / create item type |
+| GET /inventory | Paged inventory, search, count, and global stock totals |
+| GET, POST /items | Paged items / create item type |
 | PUT /items/{id} | Replace metadata and physical count |
 | GET /volunteers | Fictional session choices |
 | GET, POST /pickups | List / create pickup with UUID and volunteer ID |
@@ -120,8 +121,10 @@ Success: 200 (201 for item creation). Invalid input: 422. Missing resource: 404.
 
 The local Compose app has no authentication or authorization: the volunteer dropdown is a demo session selector, not a security boundary. Compose binds HTTP ports to localhost and does not publish the database port. The hosted demo is also public, with shared fictional records and no sign-in; see the free demo instructions. Use with real data requires individual authorization, HTTPS, secret management, request limits, and backups.
 
-Inventory edits are authoritative counts with last-write-wins behavior; an audit ledger and optimistic version checking would improve real inventory reconciliation. History records current item names rather than immutable name snapshots. Lists are unpaginated. There is no automatic reservation expiry, partial fulfillment, family data, multi-location stock, or multi-organization support.
+Inventory edits are authoritative counts with last-write-wins behavior; an audit ledger and optimistic version checking would improve real inventory reconciliation. History records current item names rather than immutable name snapshots. Inventory uses 50-row pages; pickup and reservation lists remain unpaginated. There is no automatic reservation expiry, partial fulfillment, family data, multi-location stock, or multi-organization support.
 
 ## Benchmarks
 
 See [local measurements and methodology](docs/BENCHMARKS.md).
+
+[Inventory pagination comparison](docs/PAGINATION_BENCHMARK.md): before/after measurements on 10,000 items.

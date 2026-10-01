@@ -19,7 +19,7 @@ All stocked reservation requests succeeded. In each last-unit run, exactly one r
 
 ## Interpretation
 
-These are small-dataset local measurements, not production capacity or a scalability claim. The last-unit throughput includes rejected requests. Shared-item contention increases latency; different items, larger lists, cold starts, network latency, and multiple server workers need separate measurement. There is no CPU or memory profiling in this run. Inventory and history endpoints are unpaginated, so their cost grows with record count.
+These are small-dataset local measurements, not production capacity or a scalability claim. The last-unit throughput includes rejected requests. Shared-item contention increases latency; different items, larger lists, cold starts, network latency, and multiple server workers need separate measurement. There is no CPU or memory profiling in this run. These measurements predate inventory pagination. History endpoints remain unpaginated. See the [pagination comparison](PAGINATION_BENCHMARK.md) for the subsequent optimization.
 
 ## Reproduce
 

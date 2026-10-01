@@ -18,6 +18,7 @@ type Pickup = {
   fulfilled_at: string | null;
 };
 type Reservation = {
+  item_name: string;
   id: number;
   pickup_id: string;
   item_id: number;
@@ -67,14 +68,36 @@ function App() {
     [showForm, setShowForm] = useState(false),
     [search, setSearch] = useState("");
   const guard = useRef(false);
+  const [offset, setOffset] = useState(0);
+  const [inventoryLoading, setInventoryLoading] = useState(false);
+  const [inventory, setInventory] = useState({total: 0, on_hand: 0, reserved: 0, available: 0});
+  const inventoryRequest = useRef(0);
+  async function refreshInventory() {
+    const request = ++inventoryRequest.current;
+    setInventoryLoading(true);
+    try {
+      const data = await api(`/inventory?limit=50&offset=${offset}&q=${encodeURIComponent(search)}`);
+      if (request === inventoryRequest.current) {
+        setItems(data.items);
+        setInventory(data);
+      }
+    } finally {
+      if (request === inventoryRequest.current) setInventoryLoading(false);
+    }
+  }
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      refreshInventory().catch((e) => setMessage(e.message));
+    }, 200);
+    return () => { window.clearTimeout(timer); inventoryRequest.current++; };
+  }, [offset, search]);
   async function refresh() {
-    const [a, b, c, d] = await Promise.all([
-      api("/items"),
+    const [, b, c, d] = await Promise.all([
+      refreshInventory(),
       api("/pickups"),
       api("/reservations"),
       api("/volunteers"),
     ]);
-    setItems(a);
     setPickups(b);
     setReservations(c);
     setVolunteers(d);
@@ -151,11 +174,7 @@ function App() {
     }
   }
   const own = pickups.filter((p) => p.volunteer_id === volunteer);
-  const visibleItems = items.filter((item) =>
-    `${item.name} ${item.category} ${item.condition}`
-      .toLowerCase()
-      .includes(search.toLowerCase()),
-  );
+  const visibleItems = items;
   return (
     <div className="shell">
       <aside>
@@ -215,7 +234,7 @@ function App() {
             <button
               className="secondary"
               disabled={busy}
-              onClick={() => action(refresh, "Records refreshed.")}
+              onClick={() => action(async () => {}, "Records refreshed.")}
             >
               Refresh
             </button>
@@ -236,15 +255,15 @@ function App() {
           <section className="stats" aria-label="Total inventory units">
             <div>
               <small>ON HAND</small>
-              <strong>{items.reduce((n, i) => n + i.on_hand, 0)}</strong>
+              <strong>{inventory.on_hand}</strong>
             </div>
             <div>
               <small>RESERVED</small>
-              <strong>{items.reduce((n, i) => n + i.reserved, 0)}</strong>
+              <strong>{inventory.reserved}</strong>
             </div>
             <div>
               <small>AVAILABLE</small>
-              <strong>{items.reduce((n, i) => n + i.available, 0)}</strong>
+              <strong>{inventory.available}</strong>
             </div>
           </section>
         )}
@@ -260,9 +279,10 @@ function App() {
                 <span className="sr-only">Search inventory</span>
                 <input
                   type="search"
+                  disabled={busy}
                   placeholder="Search items or categories"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => { setSearch(e.target.value); setOffset(0); }}
                 />
               </label>
               <label>
@@ -370,7 +390,7 @@ function App() {
               </table>
               {loaded && !visibleItems.length && (
                 <p className="empty-state">
-                  {items.length
+                  {search
                     ? "No matching items."
                     : "No inventory yet. Add an item to begin."}
                 </p>
@@ -378,9 +398,12 @@ function App() {
             </div>
             <div className="table-footer">
               <span>
-                {visibleItems.length} of {items.length} items
+                {inventory.total ? offset + 1 : 0}–{offset + items.length} of {inventory.total} items
               </span>
-              <span>Available = on hand − reserved</span>
+              <div>
+                <button className="secondary" disabled={busy || inventoryLoading || offset === 0} onClick={() => setOffset(Math.max(0, offset - 50))}>Previous</button>{" "}
+                <button className="secondary" disabled={busy || inventoryLoading || offset + items.length >= inventory.total} onClick={() => setOffset(offset + 50)}>Next</button>
+              </div>
             </div>
             {!pickup && loaded && (
               <p className="context-note">
@@ -407,7 +430,7 @@ function App() {
                   .map((r) => (
                     <tr key={r.id}>
                       <td>
-                        {items.find((i) => i.id === r.item_id)?.name}
+                        {r.item_name}
                         <small>{r.pickup_id.slice(-8)}</small>
                       </td>
                       <td>{r.quantity}</td>
