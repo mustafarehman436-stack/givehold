@@ -65,7 +65,7 @@ Checkpoint: pass the exercise tests and explain each line you wrote. Add a meani
 
 ## Stage 6 — Present, change, and critique (1–3 hours)
 
-Give the five-minute demo from `DEMO.md`. Then make one modest change yourself: category filtering, a reconciliation query, or an additional failure test. Explain the effect before coding it. Don't describe the project as deployed at a charity or claim usage/performance numbers you have not measured.
+Give the five-minute demo from `DEMO.md`. Then make one modest change yourself: category filtering, a reconciliation query, or an additional failure test. Explain the effect before coding it. Support performance conclusions with reproducible measurements.
 
 
 ## Design review questions

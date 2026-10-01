@@ -1,0 +1,154 @@
+{
+  "python": "3.12.14",
+  "os": "Windows-11-10.0.26200-SP0",
+  "postgresql": "16.8",
+  "results": [
+    {
+      "scenario": "inventory_read",
+      "repeat": 1,
+      "requests": 200,
+      "workers": 1,
+      "median_ms": 1.59,
+      "p95_ms": 1.94,
+      "requests_per_second": 605.3,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "reserve",
+      "repeat": 1,
+      "requests": 200,
+      "workers": 1,
+      "median_ms": 3.36,
+      "p95_ms": 4.14,
+      "requests_per_second": 287.8,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "reserve_contended",
+      "repeat": 1,
+      "requests": 200,
+      "workers": 8,
+      "median_ms": 18.44,
+      "p95_ms": 42.13,
+      "requests_per_second": 327.6,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "last_unit",
+      "repeat": 1,
+      "requests": 200,
+      "workers": 8,
+      "median_ms": 17.34,
+      "p95_ms": 69.34,
+      "requests_per_second": 349.9,
+      "statuses": {
+        "200": 1,
+        "409": 199
+      }
+    },
+    {
+      "scenario": "inventory_read",
+      "repeat": 2,
+      "requests": 200,
+      "workers": 1,
+      "median_ms": 2.06,
+      "p95_ms": 2.4,
+      "requests_per_second": 489.7,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "reserve",
+      "repeat": 2,
+      "requests": 200,
+      "workers": 1,
+      "median_ms": 4.03,
+      "p95_ms": 5.08,
+      "requests_per_second": 233.0,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "reserve_contended",
+      "repeat": 2,
+      "requests": 200,
+      "workers": 8,
+      "median_ms": 22.83,
+      "p95_ms": 44.16,
+      "requests_per_second": 309.5,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "last_unit",
+      "repeat": 2,
+      "requests": 200,
+      "workers": 8,
+      "median_ms": 17.89,
+      "p95_ms": 23.86,
+      "requests_per_second": 394.1,
+      "statuses": {
+        "200": 1,
+        "409": 199
+      }
+    },
+    {
+      "scenario": "inventory_read",
+      "repeat": 3,
+      "requests": 200,
+      "workers": 1,
+      "median_ms": 1.78,
+      "p95_ms": 2.14,
+      "requests_per_second": 523.2,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "reserve",
+      "repeat": 3,
+      "requests": 200,
+      "workers": 1,
+      "median_ms": 3.74,
+      "p95_ms": 5.25,
+      "requests_per_second": 250.3,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "reserve_contended",
+      "repeat": 3,
+      "requests": 200,
+      "workers": 8,
+      "median_ms": 19.94,
+      "p95_ms": 51.38,
+      "requests_per_second": 320.1,
+      "statuses": {
+        "200": 200
+      }
+    },
+    {
+      "scenario": "last_unit",
+      "repeat": 3,
+      "requests": 200,
+      "workers": 8,
+      "median_ms": 15.78,
+      "p95_ms": 71.52,
+      "requests_per_second": 395.6,
+      "statuses": {
+        "200": 1,
+        "409": 199
+      }
+    }
+  ]
+}

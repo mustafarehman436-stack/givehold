@@ -118,6 +118,10 @@ Success: 200 (201 for item creation). Invalid input: 422. Missing resource: 404.
 
 ## Scope and tradeoffs
 
-The local Compose app has no authentication or authorization: the volunteer dropdown is a demo session selector, not a security boundary. Compose binds HTTP ports to localhost and does not publish the database port. The hosted demo is also public, with shared fictional records and no sign-in; see the free demo instructions. A real deployment still needs individual authorization, HTTPS, secret management, request limits, and backups.
+The local Compose app has no authentication or authorization: the volunteer dropdown is a demo session selector, not a security boundary. Compose binds HTTP ports to localhost and does not publish the database port. The hosted demo is also public, with shared fictional records and no sign-in; see the free demo instructions. Use with real data requires individual authorization, HTTPS, secret management, request limits, and backups.
 
-Inventory edits are authoritative counts with last-write-wins behavior; an audit ledger and optimistic version checking would improve real inventory reconciliation. History records current item names rather than immutable name snapshots. Lists are unpaginated. There is no automatic reservation expiry, partial fulfillment, family data, multi-location stock, or claim of real-world adoption or measured performance.
+Inventory edits are authoritative counts with last-write-wins behavior; an audit ledger and optimistic version checking would improve real inventory reconciliation. History records current item names rather than immutable name snapshots. Lists are unpaginated. There is no automatic reservation expiry, partial fulfillment, family data, multi-location stock, or multi-organization support.
+
+## Benchmarks
+
+See [local measurements and methodology](docs/BENCHMARKS.md).

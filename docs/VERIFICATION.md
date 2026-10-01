@@ -26,4 +26,4 @@ The cancellation exercise is deliberately unfinished and excluded from the norma
 
 Deployed the public demo to Render's Free web service with Neon Free PostgreSQL 16. The hosted wrapper's tests bring the suite to 23 passing tests. GitHub Actions passed the PostgreSQL suite, Compose frontend build, and combined hosted Docker image build. The live HTTPS endpoint passed health, unauthorized-access rejection, authenticated frontend/API reads, reservation, and cancellation checks. The earlier Docker limitation above describes the original local build environment; CI subsequently verified the container builds.
 
-Live URL: https://shelterstock-demo.onrender.com. The demo now opens publicly without credentials. The earlier access checks describe its initial deployment. No charity adoption or load benchmark is claimed.
+Live URL: https://shelterstock-demo.onrender.com. The demo now opens publicly without credentials. The earlier access checks describe its initial deployment. For subsequent local performance measurements, see [benchmarks](BENCHMARKS.md).
